@@ -102,12 +102,12 @@ export default function ProductDemo() {
 
         <div className="mx-auto max-w-4xl">
           {/* Tab buttons */}
-          <div className="flex justify-center gap-2 mb-8">
+          <div className="flex justify-center gap-2 mb-8 flex-wrap">
             {tabs.map((tab, i) => (
               <button
                 key={tab.number}
                 onClick={() => selectTab(i)}
-                className={`relative flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-200 overflow-hidden ${
+                className={`relative flex items-center gap-1.5 px-4 py-2 rounded-full text-xs sm:text-sm sm:px-5 sm:py-2.5 sm:gap-2 font-medium transition-all duration-200 overflow-hidden whitespace-nowrap ${
                   active === i
                     ? "bg-brand-blue text-white shadow-md"
                     : "bg-white text-text-body border border-border-light hover:border-brand-blue/30"

@@ -1,21 +1,11 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 
 const ease: [number, number, number, number] = [0.21, 0.47, 0.32, 0.98];
 
 export default function EarlyAccessCTA() {
-  const [email, setEmail] = useState("");
-  const [submitted, setSubmitted] = useState(false);
-
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
-    if (!email) return;
-    setSubmitted(true);
-  };
-
   return (
     <section id="early-access" className="relative overflow-hidden py-28 md:py-32">
       <Image
@@ -54,43 +44,20 @@ export default function EarlyAccessCTA() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.3, ease }}
-          className="mt-10 mx-auto max-w-md"
+          className="mt-10"
         >
-          {submitted ? (
-            <div className="rounded-2xl bg-white/10 backdrop-blur-sm border border-white/20 p-8">
-              <p className="text-xl font-semibold text-white">
-                Thanks! We&apos;ll be in touch soon. 🎉
-              </p>
-              <p className="mt-2 text-sm text-white/70">
-                Check your inbox for a confirmation.
-              </p>
-            </div>
-          ) : (
-            <form onSubmit={handleSubmit}>
-              <div className="flex flex-col sm:flex-row gap-3">
-                <input
-                  type="email"
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="Enter your work email"
-                  className="w-full sm:flex-1 rounded-full px-6 py-3 text-sm text-text-dark bg-white border-2 border-transparent shadow-xl focus:outline-none focus:ring-0 focus:border-brand-blue placeholder:text-gray-400"
-                />
-                <div className="relative inline-flex w-full sm:w-auto">
-                  <div className="absolute -inset-1 bg-white/20 rounded-full blur-lg animate-pulse" />
-                  <button
-                    type="submit"
-                    className="relative w-full rounded-full bg-white text-brand-blue font-semibold px-7 py-3 text-[15px] shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-200 whitespace-nowrap"
-                  >
-                    Request Access
-                  </button>
-                </div>
-              </div>
-              <p className="mt-4 text-xs text-white/60">
-                Free · No commitment · We&apos;ll reach out within 24 hours to schedule
-              </p>
-            </form>
-          )}
+          <div className="relative inline-flex">
+            <div className="absolute -inset-1 bg-white/20 rounded-full blur-lg animate-pulse" />
+            <a
+              href="mailto:hello@dinotrace.com?subject=Early%20Access%20Request%20%E2%80%94%20DinoTrace&body=Hi%20DinoTrace%20team%2C%0A%0AI%E2%80%99m%20interested%20in%20getting%20early%20access.%0A%0ACompany%3A%20%0ARole%3A%20%0AWhat%20I%E2%80%99m%20looking%20for%3A%20%0A%0AThanks!"
+              className="relative rounded-full bg-white text-brand-blue font-semibold px-7 py-3 text-[15px] shadow-lg hover:shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all duration-200"
+            >
+              Request Early Access
+            </a>
+          </div>
+          <p className="mt-4 text-xs text-white/60">
+            Free · No commitment · We&apos;ll respond within 24 hours
+          </p>
         </motion.div>
 
         <motion.p
@@ -100,7 +67,7 @@ export default function EarlyAccessCTA() {
           transition={{ duration: 0.6, delay: 0.45 }}
           className="mt-8 text-white/70 text-sm"
         >
-          Prefer to chat? Email us at{" "}
+          Or email us directly at{" "}
           <a
             href="mailto:hello@dinotrace.com"
             className="underline underline-offset-4 decoration-white/30 hover:decoration-white/60 hover:text-white/80 transition-colors"
