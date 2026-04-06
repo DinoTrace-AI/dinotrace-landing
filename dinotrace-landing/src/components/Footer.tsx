@@ -1,16 +1,14 @@
 import { Link2, MessageCircle } from "lucide-react";
 
 const productLinks = [
+  { label: "Request Early Access", href: "#early-access" },
   { label: "Fraud Detection Crew", href: "#crews" },
   { label: "Anti-Phishing Crew", href: "#crews" },
   { label: "Agent Builder", href: "#features" },
-  { label: "Pricing (Coming Soon)", href: "#" },
 ];
 
 const companyLinks = [
   { label: "About Us", href: "#" },
-  { label: "Blog (Coming Soon)", href: "#" },
-  { label: "Careers (Coming Soon)", href: "#" },
   { label: "Contact", href: "mailto:hello@dinotrace.com" },
 ];
 
@@ -23,7 +21,7 @@ const legalLinks = [
 export default function Footer() {
   return (
     <footer className="bg-bg-dark text-white">
-      <div className="mx-auto max-w-7xl px-6 py-16">
+      <div className="mx-auto max-w-7xl px-6 py-12">
         <div className="grid grid-cols-1 gap-10 md:grid-cols-4">
           {/* Brand */}
           <div>
@@ -34,6 +32,11 @@ export default function Footer() {
             />
             <p className="mt-4 text-sm text-white/60">
               The Agent Factory for iGaming
+            </p>
+            <p className="mt-2 text-xs text-white/40 leading-relaxed">
+              An AI agent orchestration platform purpose-built for the iGaming
+              industry. Founded by operators and engineers who&apos;ve lived the
+              problems you face every day.
             </p>
             <div className="mt-4 flex gap-3">
               <a
@@ -105,7 +108,7 @@ export default function Footer() {
 
       <div className="border-t border-white/10">
         <div className="mx-auto max-w-7xl px-6 py-6">
-          <p className="text-center text-xs text-white/40">
+          <p className="text-center text-xs text-white/30">
             © 2025 DinoTrace. All rights reserved.
           </p>
         </div>

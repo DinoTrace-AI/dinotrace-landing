@@ -1,25 +1,27 @@
+import ScrollProgress from "@/components/ScrollProgress";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
-import TrustBar from "@/components/TrustBar";
+import ProblemStatement from "@/components/ProblemStatement";
 import ProductConcept from "@/components/ProductConcept";
+import ProductDemo from "@/components/ProductDemo";
 import CrewsShowcase from "@/components/CrewsShowcase";
-import HowItWorks from "@/components/HowItWorks";
-import Testimonials from "@/components/Testimonials";
-import FinalCTA from "@/components/FinalCTA";
+import Credibility from "@/components/Credibility";
+import EarlyAccessCTA from "@/components/EarlyAccessCTA";
 import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
     <>
+      <ScrollProgress />
       <Navbar />
       <main>
         <Hero />
-        <TrustBar />
+        <ProblemStatement />
         <ProductConcept />
+        <ProductDemo />
         <CrewsShowcase />
-        <HowItWorks />
-        <Testimonials />
-        <FinalCTA />
+        <Credibility />
+        <EarlyAccessCTA />
       </main>
       <Footer />
     </>

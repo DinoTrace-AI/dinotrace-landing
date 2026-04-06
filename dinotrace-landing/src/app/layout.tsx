@@ -12,6 +12,9 @@ export const metadata: Metadata = {
   title: "DinoTrace — The Agent Factory for iGaming",
   description:
     "Deploy intelligent agent crews that detect fraud, ensure compliance, and automate operations — through conversation, not code.",
+  icons: {
+    icon: "/favicon.png",
+  },
   openGraph: {
     title: "DinoTrace — The Agent Factory for iGaming",
     description:
