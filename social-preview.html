@@ -1,0 +1,285 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>DinoTrace — Social Unfurl Preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #F4F5F7;
+    --ink: #0F141E;
+    --muted: #5A6270;
+    --hair: rgba(15,20,30,0.08);
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--bg); color: var(--ink); font-family: 'Geist', -apple-system, system-ui, sans-serif; font-feature-settings: 'ss01','cv11'; }
+  .mono { font-family: 'Geist Mono', 'SF Mono', Menlo, monospace; }
+
+  .page {
+    max-width: 1280px; margin: 0 auto; padding: 56px 32px 120px;
+  }
+  header.top {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 40px; gap: 24px; flex-wrap: wrap;
+  }
+  .brand { display: flex; align-items: center; gap: 10px; }
+  .brand img { height: 28px; }
+  .eyebrow {
+    font-family: 'Geist Mono', monospace; font-size: 11px; font-weight: 500;
+    letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted);
+  }
+  h1.page-title {
+    font-size: 40px; letter-spacing: -0.03em; line-height: 1.05; margin: 0 0 12px;
+    font-weight: 600;
+  }
+  p.lead {
+    font-size: 16px; line-height: 1.55; color: var(--muted); margin: 0;
+    max-width: 640px;
+  }
+
+  .grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 28px;
+    margin-top: 56px;
+  }
+  @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
+
+  .card {
+    background: white;
+    border: 1px solid var(--hair);
+    border-radius: 16px;
+    padding: 20px 20px 22px;
+    box-shadow: 0 1px 2px rgba(15,20,30,0.03), 0 8px 24px rgba(15,20,30,0.04);
+  }
+  .card-label {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 16px;
+  }
+  .card-label .name { font-size: 13px; font-weight: 500; }
+  .card-label .tag {
+    font-family: 'Geist Mono', monospace; font-size: 10px;
+    color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase;
+  }
+
+  /* ============================================================
+     iMessage / WhatsApp bubble
+  ============================================================ */
+  .imessage {
+    background: linear-gradient(180deg, #EAEAEC, #E3E4E6);
+  }
+  .bubble-row { display: flex; }
+  .bubble {
+    background: #E9E9EB; color: #111;
+    border-radius: 18px; overflow: hidden;
+    max-width: 320px; margin-left: 0;
+    box-shadow: 0 1px 0 rgba(0,0,0,0.04);
+  }
+  .bubble img { display: block; width: 100%; height: auto; }
+  .bubble .meta {
+    padding: 10px 14px 12px;
+    border-top: 1px solid rgba(0,0,0,0.05);
+  }
+  .bubble .meta .title { font-size: 13px; font-weight: 600; line-height: 1.25; }
+  .bubble .meta .desc { font-size: 12px; color: #666; margin-top: 3px; line-height: 1.35; }
+  .bubble .meta .url { font-size: 11px; color: #999; margin-top: 6px; text-transform: lowercase; }
+
+  /* ============================================================
+     Slack unfurl
+  ============================================================ */
+  .slack-card {
+    background: white;
+    border-left: 4px solid #CFD6DE;
+    padding: 12px 14px;
+    border-radius: 4px;
+    max-width: 520px;
+  }
+  .slack-site { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+  .slack-site .fav { width: 16px; height: 16px; border-radius: 3px; }
+  .slack-site .site { font-size: 13px; color: #616061; }
+  .slack-card .title { font-size: 15px; font-weight: 700; color: #1264A3; line-height: 1.3; margin: 2px 0 6px; }
+  .slack-card .title:hover { text-decoration: underline; cursor: pointer; }
+  .slack-card .desc { font-size: 14px; color: #1D1C1D; line-height: 1.45; margin-bottom: 12px; }
+  .slack-card .img-wrap { border-radius: 8px; overflow: hidden; border: 1px solid #e1e1e1; max-width: 480px; }
+  .slack-card .img-wrap img { display: block; width: 100%; height: auto; }
+
+  /* ============================================================
+     LinkedIn post
+  ============================================================ */
+  .li-post {
+    background: white; border: 1px solid #E0DFDC; border-radius: 8px;
+    overflow: hidden; max-width: 560px;
+  }
+  .li-head { display: flex; gap: 10px; padding: 14px 16px 10px; align-items: flex-start; }
+  .li-avatar { width: 40px; height: 40px; border-radius: 50%; background: #F4F5F7; flex-shrink: 0; overflow: hidden; display: flex; align-items: center; justify-content: center; border: 1px solid #E0DFDC; }
+  .li-avatar img { width: 32px; height: 32px; object-fit: contain; }
+  .li-head .who { font-size: 14px; font-weight: 600; color: #000; line-height: 1.25; }
+  .li-head .byline { font-size: 12px; color: #666; line-height: 1.4; margin-top: 2px; }
+  .li-post .copy { padding: 0 16px 12px; font-size: 14px; line-height: 1.5; color: #000; }
+  .li-unfurl { border-top: 1px solid #E0DFDC; border-bottom: 1px solid #E0DFDC; cursor: pointer; }
+  .li-unfurl img { display: block; width: 100%; height: auto; }
+  .li-unfurl-meta { padding: 10px 16px 12px; background: #F4F5F7; }
+  .li-unfurl-meta .url { font-size: 12px; color: #666; text-transform: lowercase; }
+  .li-unfurl-meta .title { font-size: 14px; font-weight: 600; color: #000; margin-top: 2px; line-height: 1.3; }
+
+  /* ============================================================
+     Twitter / X
+  ============================================================ */
+  .x-post {
+    background: white; border: 1px solid #EFF3F4; border-radius: 16px;
+    padding: 14px 16px; max-width: 560px; color: #0F1419;
+  }
+  .x-head { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 8px; }
+  .x-avatar { width: 40px; height: 40px; border-radius: 50%; background: #F4F5F7; overflow: hidden; display: flex; align-items: center; justify-content: center; border: 1px solid #EFF3F4; }
+  .x-avatar img { width: 32px; height: 32px; object-fit: contain; }
+  .x-who { font-size: 15px; font-weight: 700; line-height: 1.2; }
+  .x-handle { font-size: 14px; color: #536471; line-height: 1.4; }
+  .x-post .copy { font-size: 15px; line-height: 1.4; margin-bottom: 12px; }
+  .x-unfurl { border: 1px solid #CFD9DE; border-radius: 16px; overflow: hidden; cursor: pointer; }
+  .x-unfurl img { display: block; width: 100%; height: auto; }
+  .x-unfurl-meta { padding: 10px 14px 12px; }
+  .x-unfurl-meta .url { font-size: 13px; color: #536471; }
+  .x-unfurl-meta .title { font-size: 15px; color: #0F1419; margin-top: 2px; line-height: 1.3; }
+  .x-unfurl-meta .desc { font-size: 13px; color: #536471; margin-top: 2px; line-height: 1.3; }
+
+  /* Full raw */
+  .raw {
+    grid-column: 1 / -1;
+    background: #0A0E1A; color: white;
+    padding: 32px; border-radius: 16px;
+    display: flex; flex-direction: column; gap: 16px; align-items: center;
+  }
+  .raw .raw-label {
+    font-family: 'Geist Mono', monospace; font-size: 11px;
+    color: rgba(255,255,255,0.5); letter-spacing: 0.12em; text-transform: uppercase;
+  }
+  .raw img {
+    max-width: 100%;
+    border-radius: 10px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+  }
+  .raw .dims { font-family: 'Geist Mono', monospace; font-size: 11px; color: rgba(255,255,255,0.4); }
+
+  footer.note {
+    margin-top: 56px; padding-top: 24px; border-top: 1px solid var(--hair);
+    font-size: 13px; color: var(--muted); line-height: 1.6;
+    font-family: 'Geist Mono', monospace;
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <header class="top">
+    <div class="brand">
+      <img src="assets/dinotrace-logo-color.png" alt="DinoTrace" />
+    </div>
+    <span class="eyebrow">Social unfurl preview</span>
+  </header>
+
+  <h1 class="page-title">How dinotrace.com unfurls in the wild</h1>
+  <p class="lead">Every platform renders the same Open Graph + Twitter tags a little differently. Here's how the new social card (<span class="mono">1200×630</span>) lands on the places people actually share it.</p>
+
+  <div class="grid">
+
+    <!-- iMessage -->
+    <div class="card imessage">
+      <div class="card-label">
+        <span class="name">iMessage · WhatsApp · Signal</span>
+        <span class="tag">Rich link preview</span>
+      </div>
+      <div class="bubble-row">
+        <div class="bubble">
+          <img src="assets/social-card.png" alt="" />
+          <div class="meta">
+            <div class="title">DinoTrace — The Agent Factory for iGaming</div>
+            <div class="desc">Deploy intelligent agent crews that detect fraud, stop phishing, and automate iGaming operations.</div>
+            <div class="url">dinotrace.com</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Slack -->
+    <div class="card">
+      <div class="card-label">
+        <span class="name">Slack</span>
+        <span class="tag">Unfurled link</span>
+      </div>
+      <div class="slack-card">
+        <div class="slack-site">
+          <img src="assets/favicon.png" class="fav" alt="" />
+          <span class="site">dinotrace.com</span>
+        </div>
+        <div class="title">DinoTrace — The Agent Factory for iGaming | Fraud, AML &amp; Automation</div>
+        <div class="desc">Deploy intelligent agent crews that detect fraud, stop phishing, and automate iGaming operations — through conversation, not code.</div>
+        <div class="img-wrap"><img src="assets/social-card.png" alt="" /></div>
+      </div>
+    </div>
+
+    <!-- LinkedIn -->
+    <div class="card">
+      <div class="card-label">
+        <span class="name">LinkedIn post</span>
+        <span class="tag">Large image card</span>
+      </div>
+      <div class="li-post">
+        <div class="li-head">
+          <div class="li-avatar"><img src="assets/favicon-192.png" alt="" /></div>
+          <div>
+            <div class="who">DinoTrace</div>
+            <div class="byline">The Agent Factory for iGaming · 2d</div>
+          </div>
+        </div>
+        <div class="copy">We're opening early access. If you're running ops at an iGaming operator and fraud, AML, or bonus abuse eat your week — let's talk. 👇</div>
+        <div class="li-unfurl"><img src="assets/social-card.png" alt="" /></div>
+        <div class="li-unfurl-meta">
+          <div class="url">dinotrace.com</div>
+          <div class="title">DinoTrace — The Agent Factory for iGaming</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Twitter / X -->
+    <div class="card">
+      <div class="card-label">
+        <span class="name">X (Twitter)</span>
+        <span class="tag">summary_large_image</span>
+      </div>
+      <div class="x-post">
+        <div class="x-head">
+          <div class="x-avatar"><img src="assets/favicon-192.png" alt="" /></div>
+          <div>
+            <div class="x-who">DinoTrace</div>
+            <div class="x-handle">@dinotrace · 2d</div>
+          </div>
+        </div>
+        <div class="copy">Ship AI crews for fraud, AML &amp; retention in iGaming — no YAML, no engineering ticket. Early access open.</div>
+        <div class="x-unfurl">
+          <img src="assets/social-card.png" alt="" />
+          <div class="x-unfurl-meta">
+            <div class="url">🔗 dinotrace.com</div>
+            <div class="title">DinoTrace — The Agent Factory for iGaming</div>
+            <div class="desc">Deploy intelligent agent crews that detect fraud, stop phishing, and automate iGaming operations.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Raw asset -->
+    <div class="card raw">
+      <div class="raw-label">Raw social card asset</div>
+      <img src="assets/social-card.png" alt="DinoTrace social card" />
+      <div class="dims">assets/social-card.png · 1200×630 · og:image + twitter:image</div>
+    </div>
+
+  </div>
+
+  <footer class="note">
+    Testing tools · <a href="https://cards-dev.twitter.com/validator" target="_blank" style="color: inherit;">Twitter Card Validator</a> · <a href="https://www.linkedin.com/post-inspector/" target="_blank" style="color: inherit;">LinkedIn Post Inspector</a> · <a href="https://developers.facebook.com/tools/debug/" target="_blank" style="color: inherit;">Meta Sharing Debugger</a>. After publishing, run each once to force-refresh the cache.
+  </footer>
+
+</div>
+</body>
+</html>

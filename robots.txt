@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+# Block common dev/build artifacts (harmless if absent)
+Disallow: /api/
+Disallow: /_next/
+Disallow: /admin/
+
+# Sitemap
+Sitemap: https://dinotrace.com/sitemap.xml
